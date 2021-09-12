@@ -1,0 +1,16 @@
+#!/bin/bash
+
+HOSTFILE="/var/www/myddns/data/hosts"
+
+# Comprobamos si el nuevo archivo ha cambiado o si el md5sum es el mismo que el que ya hay
+[[ ! -f ${HOSTFILE}.md5sum ]] && VIEJO="" || VIEJO=$(cat ${HOSTFILE}.md5sum)
+NUEVO=$(md5sum ${HOSTFILE})
+
+if [[ ${VIEJO} == ${NUEVO} ]]
+then
+  echo "WARN: No hubo cambios en el archivo de hosts $HOSTFILE"
+else
+  md5sum ${HOSTFILE} > ${HOSTFILE}.md5sum
+  service dnsmasq restart
+  echo "INFO: Archivo de $HOSTFILE recargado"
+fi

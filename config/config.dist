@@ -1,0 +1,6 @@
+<?php
+
+$basedomain='myddns.example.com';
+$password='';
+
+

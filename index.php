@@ -1,8 +1,11 @@
 <?php
 
 include 'config/config.php';
-
 if (empty($basedomain)) die ('config.php is needed');
+
+//
+// Functions
+//
 
 function getIP(){
   if(!empty($_SERVER['HTTP_CLIENT_IP'])){
@@ -17,11 +20,23 @@ function getIP(){
   return $ip;
 }
 
+//
+// Global variables
+//
 
 $updated = false;
+$newsubdomain = true;
 $errormsg = array();
+
+//
+// Sanitize INPUT
+//
+
+// $_REQUEST['action']
 $action = intval($_REQUEST['action']);
 
+// $_REQUEST['ip']
+$ip = '';
 if (isset($_REQUEST['ip'])) {
   $ip=filter_var($_REQUEST['ip'], FILTER_VALIDATE_IP);
   if (!$ip) {
@@ -32,10 +47,11 @@ if (isset($_REQUEST['ip'])) {
   $ip = getIP();
 }
 
+// $_REQUEST['subdomain']
 $subdomain = '';
 if (isset($_REQUEST['subdomain'])) {
   $subdomain=filter_var($_REQUEST['subdomain'], FILTER_VALIDATE_REGEXP,
-    array("options"=>array("regexp"=>"/^[0-9A-Za-z-_]{4,}$/")));
+    array("options"=>array("regexp"=>"/^[0-9a-z-_]{4,}$/")));
   if (!$subdomain) {
     $errormsg['subdomain'] = 'Subdomain not valid.';
     $subdomain = '';
@@ -44,27 +60,51 @@ if (isset($_REQUEST['subdomain'])) {
 
 $domain = $subdomain.'.'.$basedomain;
 
-//if (isset($_REQUEST['subdomain']) && !empty($_REQUEST['subdomain'])) {
-//  $subdomain = $_REQUEST['subdomain'];
+// $_REQUEST['code']
+$code = '';
+if (isset($_REQUEST['code'])) {
+  $code=filter_var($_REQUEST['code'], FILTER_SANITIZE_STRING);
+  if (!empty($password) && ($password != $code)) {
+    $errormsg['code'] = 'Access-code not valid.';
+  }
+}
+
+//
+// Create or update
+//
 if ($action == 1 && count($errormsg) == 0) {
   $lines  = file('data/hosts');
 
-  // delete subdomain in file
   $result = '';
-  $deleted = false;
   foreach($lines as $line) {
-    if(!empty(trim($line)) && (stripos($line, $domain) === false)) {
-      $result .= $line;
+    $line = trim($line);
+    if (empty($line)) {
+      continue;
+    }
+    if(stripos($line, $domain) !== false) {
+      // $domain found
+      $newsubdomain = false;
+      if (stripos($line, $ip) !== false) {
+        // $ip do not change
+        $errormsg['not-changed'] = 'Your IP is the same of last request';
+        break;
+      } else {
+        $result .= "$ip \t $domain\n";
+        $updated = true;
+      }
     } else {
-      $deleted = true;
+      $result .= $line."\n";
     }
   }
-  $result .= "$ip \t $domain\n";
-  file_put_contents('data/hosts', $result);
-  $updated = true;
+  if ($updated || $newsubdomain) {
+    if ($newsubdomain) {
+      $result .= "$ip \t $domain\n";
+    }
+    file_put_contents('data/hosts', $result);
+    $updated = true;
+  }
 }
 
-//echo "$ip";
 ?><!DOCTYPE html>
 <html>
   <head>
@@ -79,7 +119,7 @@ if ($action == 1 && count($errormsg) == 0) {
 <?php if ($updated) { ?>
 <div class="notification is-success">
   <button class="delete"></button>
-  The IP for <?php echo $subdomain; ?> was updated to <?php echo $ip; ?>
+  The IP for <strong><?php echo $domain; ?></strong> was updated to <em><?php echo $ip; ?></em>
 </div>
 <?php } ?>
 
@@ -97,11 +137,12 @@ if ($action == 1 && count($errormsg) == 0) {
         MyDDNS
       </h1>
       <p class="subtitle">
-        Un servidor de DDNS para uso personal basado en <strong>dnsmasq</strong>
+        Simple Dynamic DNS Web management self-hosting. Run over <strong>dnsmasq</strong>.
       </p>
     </div>
   </section>
-  <section class="section">
+  <section class="section is-medium">
+    <div class="container">
 
 <form action="/" method="post">
 <input type="hidden" name="action" value="1">
@@ -121,10 +162,19 @@ if ($action == 1 && count($errormsg) == 0) {
 <div class="column">
 <div class="field">
   <div class="control">
-    <input class="input is-medium" name="ip" type="text" value="<?php echo $ip; ?>">
+    <input class="input is-medium" id="ip" name="ip" type="text" placeholder="IP" value="<?php echo $ip; ?>">
   </div>
 </div>
 </div>
+<?php if (!empty($password)) { ?>
+<div class="column">
+<div class="field">
+  <div class="control">
+    <input class="input is-medium" id="code" name="code" type="password" placeholder="Access CODE" value="<?php echo $code; ?>">
+  </div>
+</div>
+</div>
+<?php } ?>
 <div class="column">
 <div class="field">
   <div class="buttons">
@@ -134,8 +184,19 @@ if ($action == 1 && count($errormsg) == 0) {
 </div>
 </div>
 </form>
-
+    </div>
   </section>
+
+<footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      <strong>MyDDNS</strong> by <a href="https://github.com/joker-x">joker-x</a>. The source code is licensed
+      <a href="https://github.com/joker-x/myddns/blob/main/LICENSE">GNU Affero General Public License v3.0</a>.
+      Available in <a href="https://github.com/joker-x/myddns">Github</a>.
+    </p>
+  </div>
+</footer>
+
 <script
   src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -143,17 +204,6 @@ if ($action == 1 && count($errormsg) == 0) {
 </script>
 
 <script>
-/*
-document.addEventListener('DOMContentLoaded', () => {
-  (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
-    const $notification = $delete.parentNode;
-
-    $delete.addEventListener('click', () => {
-      $notification.parentNode.removeChild($notification);
-    });
-  });
-});
-*/
 $('.notification .delete').on('click', function(e) {
   $(this).parent().fadeOut();
 });

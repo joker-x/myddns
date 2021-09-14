@@ -33,18 +33,19 @@ $errormsg = array();
 //
 
 // $_REQUEST['action']
-$action = intval($_REQUEST['action']);
+$action = 0;
+if (isset($_REQUEST['action'])) {
+  $action = intval($_REQUEST['action']);
+}
 
 // $_REQUEST['ip']
-$ip = '';
+$ip = getIP();
 if (isset($_REQUEST['ip'])) {
   $ip=filter_var($_REQUEST['ip'], FILTER_VALIDATE_IP);
   if (!$ip) {
     $errormsg['ip'] = 'IP not valid.';
     $ip = getIP();
   }
-} else {
-  $ip = getIP();
 }
 
 // $_REQUEST['subdomain']
@@ -147,7 +148,7 @@ if ($action == 1 && count($errormsg) == 0) {
 <form action="/" method="post">
 <input type="hidden" name="action" value="1">
 <div class="columns">
-<div class="column">
+<div class="column is-two-fifths">
 <div class="field has-addons">
   <p class="control">
     <input class="input is-medium" id="subdomain" name="subdomain" type="text" placeholder="subdomain" value="<?php echo $subdomain; ?>">
@@ -179,7 +180,7 @@ if ($action == 1 && count($errormsg) == 0) {
 <div class="field">
   <div class="buttons">
     <input class="button is-medium is-primary" type="submit" value="Update">
-    <a id="checkdns" href="https://dnschecker.org/#A/<?php echo $domain; ?>/<?php echo $ip; ?>" class="button is-primary is-medium is-info" target="_blank">Check DNS</a>
+    <a id="checkdns" href="https://dnschecker.org/#A/<?php echo $domain; ?>/<?php echo $ip; ?>" class="button is-primary is-medium is-info" target="_blank">Check</a>
   </div>
 </div>
 </div>

@@ -11,6 +11,6 @@ then
   echo "WARN: No hubo cambios en el archivo de hosts $HOSTFILE"
 else
   md5sum ${HOSTFILE} > ${HOSTFILE}.md5sum
-  service dnsmasq restart
+  service dnsmasq reload
   echo "INFO: Archivo de $HOSTFILE recargado"
 fi

@@ -22,6 +22,8 @@ Also, you have to create these records in your Zone DNS of your domain provider:
 2. Clone this repository
 3. Run INSTALL.bash as root
 
+This script will ask you for the BASEDOMAIN, BASEIP and PASSWORD values ​​interactively. They can also be read as environment variables.
+
 ## Use
 
 ### From browser
@@ -35,3 +37,21 @@ You can use curl or wget and call it from a cron to automatize:
 ```bash
 curl -s "http://myddns.example.com/?action=1&format=json&subdomain=<SUBDOMAIN>&code=<PASSWORD>"
 ```
+
+### Arguments
+
+They can be sent both by POST and by GET:
+
+- **action**: To create or update must be 1. By default is 0.
+- **format**: 'json' or 'html'. By default is 'html'.
+- **subdomain**: It can only contain lowercase letters, numbers, or the symbols '_' and '-'. At least 4 characters. By default is ''.
+- **ip**: It can only contain a valid IP. By default, it autodetects the IP from which the request is made.
+- **code**: The password defined in config.php file. If empty, you can manage myDDNS without password required.
+
+### JSON response
+
+- **domain**
+- **ip**
+- **code**
+- **error**: false if the ip to subdomain was updated, true if not.
+- **errormsg**: object with error messages if any.

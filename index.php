@@ -107,7 +107,8 @@ if ($action == 1 && count($errormsg) == 0) {
 }
 
 if ($_REQUEST['format'] == "json") {
-  $json = '{"domain":"'.$domain.'","ip":'.$ip.',"password":"'.$password.'",';
+  header('Content-Type: application/json; charset=utf-8');
+  $json = '{"domain":"'.$domain.'","ip":"'.$ip.'","code":"'.$code.'",';
   if (count($errormsg) == 0) {
     $json .= '"error":false';
   } else {

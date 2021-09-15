@@ -106,6 +106,17 @@ if ($action == 1 && count($errormsg) == 0) {
   }
 }
 
+if ($_REQUEST['format'] == "json") {
+  $json = '{"domain":"'.$domain.'","ip":'.$ip.',"password":"'.$password.'",';
+  if (count($errormsg) == 0) {
+    $json .= '"error":false';
+  } else {
+    $json .= '"error":true,"errormsg":';
+    $json .= json_encode($errormsg);
+  }
+  $json .= "}";
+  echo "$json";
+} else {
 ?><!DOCTYPE html>
 <html>
   <head>
@@ -214,3 +225,5 @@ $('#checkdns').on ('click', function (e) {
 </script>
   </body>
 </html>
+<?php
+}

@@ -6,12 +6,32 @@ Simple Dynamic DNS Web management self-hosting. Run over dnsmasq.
 
 ## Preparation
 
-At least, if your subdmain is myddns.example.com and your server IP is 1.2.3.4, you have to create an A in your dns zone for myddns.example.com to 1.2.3.4. Also, you have to create an NS record for myddns.example.com to myddns.example.com.
+You need root access to a server, virtual machine or container with IPv6 enabled. The 53 port must be open in your firewall.
+
+Also, you have to create these records in your Zone DNS of your domain provider:
+
+- A record for subdomain (myddns.example.com) to point to IPv4 of your server
+- AAAA record for subdomain (myddns.example.com) to point to IPv6 of your server
+- NS record to point to subdomain (myddns.example.com)
 
 ## Installation
 
 ### Local installation in Ubuntu 20.04 server
 
-1. Clone this repository
-2. Copy config/config.dist to config/config.php and customize it
+1. Change to root user
+2. Clone this repository
 3. Run INSTALL.bash as root
+
+## Use
+
+### From browser
+
+Open base domain in your browser and click on "Update" button.
+
+### From command line
+
+You can use curl or wget and call it from a cron to automatize:
+
+```bash
+curl -s "http://myddns.example.com/?action=1&format=json&subdomain=<SUBDOMAIN>&code=<PASSWORD>"
+```

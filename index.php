@@ -82,7 +82,7 @@ if ($action == 1 && count($errormsg) == 0) {
     if (empty($line)) {
       continue;
     }
-    if(stripos($line, $domain) !== false) {
+    if(stripos($line, "\t".$domain) !== false) {
       // $domain found
       $newsubdomain = false;
       if (stripos($line, $ip) !== false) {

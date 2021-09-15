@@ -1,4 +1,4 @@
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # m h dom mon dow user  command
-* *    * * *   root    /usr/local/sbin/myddns-reload
+* *    * * *   root    /usr/local/sbin/myddns-reload >/dev/null 2>&1

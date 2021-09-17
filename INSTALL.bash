@@ -29,14 +29,14 @@ function disable_systemd_resolved() {
   systemctl disable systemd-resolved
   systemctl stop systemd-resolved
   unlink /etc/resolv.conf
-  echo "nameserver 8.8.8.8" > /etc/resolv.conf
+  echo "nameserver 208.67.222.222" > /etc/resolv.conf
 }
 
 function configure_nginx() {
   echo -e "${GREEN}Configure Nginx${NOCOLOR}"
   cp "$SCRIPTPATH/config/myddns.nginx" /etc/nginx/sites-available/myddns
+  sed -i "s/server_name _;/server_name $BASEDOMAIN;/g" /etc/nginx/sites-available/myddns
   cd /etc/nginx/sites-enabled
-  [[ -f default ]] && unlink default
   [[ -f myddns ]] && unlink myddns
   ln -s ../sites-available/myddns
   nginx -t && service nginx restart
@@ -98,7 +98,8 @@ function read_args() {
 
 cd "$SCRIPTPATH"
 read_args
-disable_systemd_resolved
+[ ! -z "$(echo $(service systemd-resolved status) | grep loaded)" ] && \
+  disable_systemd_resolved
 install_dependencies
 copy_www
 configure_app

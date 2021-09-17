@@ -90,7 +90,7 @@ if ($action == 1 && count($errormsg) == 0) {
         $errormsg['not-changed'] = 'Your IP is the same of last request';
         break;
       } else {
-        $result .= "$ip \t $domain\n";
+        $result .= "$ip\t$domain\n";
         $updated = true;
       }
     } else {
@@ -99,7 +99,7 @@ if ($action == 1 && count($errormsg) == 0) {
   }
   if ($updated || $newsubdomain) {
     if ($newsubdomain) {
-      $result .= "$ip \t $domain\n";
+      $result .= "$ip\t$domain\n";
     }
     file_put_contents('data/hosts', $result);
     $updated = true;

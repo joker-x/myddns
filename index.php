@@ -161,7 +161,7 @@ if ($_REQUEST['format'] == "json") {
 <form action="/" method="post">
 <input type="hidden" name="action" value="1">
 <div class="columns">
-<div class="column is-two-fifths">
+<div class="column is-one-third">
 <div class="field has-addons">
   <p class="control">
     <input class="input is-medium" id="subdomain" name="subdomain" type="text" placeholder="subdomain" value="<?php echo $subdomain; ?>">
@@ -189,13 +189,17 @@ if ($_REQUEST['format'] == "json") {
 </div>
 </div>
 <?php } ?>
-<div class="column">
-<div class="field">
+<div class="column is-one-third">
   <div class="buttons">
+    <div class="field select is-medium">
+      <select id="format" name="format">
+        <option>html</option>
+        <option>json</option>
+      </select>
+    </div>
     <input class="button is-medium is-primary" type="submit" value="Update">
     <a id="checkdns" href="https://dnschecker.org/#A/<?php echo $domain; ?>/<?php echo $ip; ?>" class="button is-primary is-medium is-info" target="_blank">Check</a>
   </div>
-</div>
 </div>
 </form>
     </div>

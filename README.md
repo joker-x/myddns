@@ -43,7 +43,7 @@ curl -s "http://myddns.example.com/?action=1&format=json&subdomain=<SUBDOMAIN>&c
 They can be sent both by POST and by GET:
 
 - **action**: To create or update must be 1. By default is 0.
-- **format**: 'json' or 'html'. By default is 'html'.
+- **format**: 'html', 'json' or 'simple'. By default is 'html'.
 - **subdomain**: It can only contain lowercase letters, numbers, or the symbols '_' and '-'. At least 4 characters. By default is ''.
 - **ip**: It can only contain a valid IP. By default, it autodetects the IP from which the request is made.
 - **code**: The password defined in config.php file. If empty, you can manage myDDNS without password required.
@@ -52,6 +52,10 @@ They can be sent both by POST and by GET:
 
 - **domain**
 - **ip**
-- **code**
 - **error**: false if the ip to subdomain was updated, true if not.
 - **errormsg**: object with error messages if any.
+
+### simple response
+
+- **OK** if the ip to subdomain was updated.
+- **KO** if the ip to subdomain was not updated.

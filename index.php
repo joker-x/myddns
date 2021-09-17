@@ -108,8 +108,8 @@ if ($action == 1 && count($errormsg) == 0) {
 
 if ($_REQUEST['format'] == "json") {
   header('Content-Type: application/json; charset=utf-8');
-  $json = '{"domain":"'.$domain.'","ip":"'.$ip.'","code":"'.$code.'",';
-  if (count($errormsg) == 0) {
+  $json = '{"domain":"'.$domain.'","ip":"'.$ip.'",';
+  if ($action == 1 && count($errormsg) == 0) {
     $json .= '"error":false';
   } else {
     $json .= '"error":true,"errormsg":';
@@ -117,6 +117,12 @@ if ($_REQUEST['format'] == "json") {
   }
   $json .= "}";
   echo "$json";
+} elseif ($_REQUEST['format'] == 'simple') {
+  if ($action == 1 && count($errormsg) == 0) {
+    echo "OK";
+  } else {
+    echo "KO";
+  }
 } else {
 ?><!DOCTYPE html>
 <html>
@@ -195,6 +201,7 @@ if ($_REQUEST['format'] == "json") {
       <select id="format" name="format">
         <option>html</option>
         <option>json</option>
+        <option>simple</option>
       </select>
     </div>
     <input class="button is-medium is-primary" type="submit" value="Update">

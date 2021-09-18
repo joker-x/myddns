@@ -19,9 +19,9 @@ GREEN='\033[0;32m'
 
 function install_dependencies() {
   echo -e "${GREEN}Install dependencies${NOCOLOR}"
-  apt update
-  apt upgrade
-  apt install coreutils nginx dnsmasq php7.4-fpm
+  apt -y update
+  apt -y upgrade
+  apt install -y coreutils nginx dnsmasq php7.4-fpm
 }
 
 function disable_systemd_resolved() {

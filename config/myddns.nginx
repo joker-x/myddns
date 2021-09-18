@@ -2,6 +2,9 @@ server {
   listen 80;
   listen [::]:80;
 
+  access_log      /var/log/nginx/myddns.access.log;
+  error_log       /var/log/nginx/myddns.error.log;
+
   root /var/www/myddns;
 
   index index.php index.html index.htm;

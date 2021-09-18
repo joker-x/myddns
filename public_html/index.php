@@ -209,7 +209,7 @@ if ($_REQUEST['format'] == "json") {
       </select>
     </div>
     <input class="button is-medium is-primary" type="submit" value="Update">
-    <a id="checkdns" href="https://dnschecker.org/#A/<?php echo $domain; ?>/<?php echo $ip; ?>" class="button is-primary is-medium is-info" target="_blank">Check</a>
+    <a id="checkdns" href="https://dnschecker.org/#A/<?php echo $domain; ?>/<?php echo $ip; ?>" class="button is-primary is-medium is-info" target="_blank">Test</a>
   </div>
 </div>
 </form>

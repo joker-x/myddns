@@ -42,8 +42,8 @@ function configure_nginx() {
     [[ -f myddns ]] && unlink myddns
     ln -s ../sites-available/myddns
   else
-    cp "$SCRIPTPATH/config/myddns.nginx" /etc/nginx/conf.d/myddns
-    sed -i "s/server_name _;/server_name $BASEDOMAIN;/g" /etc/nginx/conf.d/myddns
+    cp "$SCRIPTPATH/config/myddns.nginx" /etc/nginx/conf.d/myddns.conf
+    sed -i "s/server_name _;/server_name $BASEDOMAIN;/g" /etc/nginx/conf.d/myddns.conf
   fi
   nginx -t && service nginx restart
 }

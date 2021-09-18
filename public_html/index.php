@@ -158,10 +158,10 @@ if ($_REQUEST['format'] == "json") {
   <section class="section">
     <div class="container">
       <h1 class="title">
-        MyDDNS
+        <span class="tag is-warning">BETA</span> MyDDNS
       </h1>
       <p class="subtitle">
-        Simple Dynamic DNS Web management self-hosting. Run over <strong>dnsmasq</strong>.
+        Simple Dynamic DNS Web management self-hosting. It use <strong><a href="https://en.wikipedia.org/wiki/Dnsmasq" target="_blank">dnsmasq</a></strong>. It was inspired on <a href="http://www.duckdns.org/" target="_blank">duckdns.org</a>.
       </p>
     </div>
   </section>

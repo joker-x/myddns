@@ -1,5 +1,6 @@
-# myddns
-Simple Dynamic DNS Web management self-hosting. Run over dnsmasq.
+# MyDDNS
+
+Simple Dynamic DNS Web management self-hosting. It use [dnsmasq](https://en.wikipedia.org/wiki/Dnsmasq). It was inspired on [duckdns.org](http://www.duckdns.org).
 
 ![image](https://user-images.githubusercontent.com/1895563/133020249-1c2d59c0-a32f-43fe-a1a5-666131d0d188.png)
 
@@ -55,7 +56,7 @@ They can be sent both by POST and by GET:
 - **error**: false if the ip to subdomain was updated, true if not.
 - **errormsg**: object with error messages if any.
 
-### simple response
+### Simple response
 
 - **OK** if the ip to subdomain was updated.
 - **KO** if the ip to subdomain was not updated.

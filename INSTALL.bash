@@ -34,11 +34,17 @@ function disable_systemd_resolved() {
 
 function configure_nginx() {
   echo -e "${GREEN}Configure Nginx${NOCOLOR}"
-  cp "$SCRIPTPATH/config/myddns.nginx" /etc/nginx/sites-available/myddns
-  sed -i "s/server_name _;/server_name $BASEDOMAIN;/g" /etc/nginx/sites-available/myddns
-  cd /etc/nginx/sites-enabled
-  [[ -f myddns ]] && unlink myddns
-  ln -s ../sites-available/myddns
+  if [ -d /etc/nginx/sites-available ]
+  then
+    cp "$SCRIPTPATH/config/myddns.nginx" /etc/nginx/sites-available/myddns
+    sed -i "s/server_name _;/server_name $BASEDOMAIN;/g" /etc/nginx/sites-available/myddns
+    cd /etc/nginx/sites-enabled
+    [[ -f myddns ]] && unlink myddns
+    ln -s ../sites-available/myddns
+  else
+    cp "$SCRIPTPATH/config/myddns.nginx" /etc/nginx/conf.d/myddns
+    sed -i "s/server_name _;/server_name $BASEDOMAIN;/g" /etc/nginx/conf.d/myddns
+  fi
   nginx -t && service nginx restart
 }
 

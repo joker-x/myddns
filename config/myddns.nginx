@@ -5,7 +5,7 @@ server {
   access_log      /var/log/nginx/myddns.access.log;
   error_log       /var/log/nginx/myddns.error.log;
 
-  root /var/www/myddns;
+  root /var/www/myddns/public_html;
 
   index index.php index.html index.htm;
 

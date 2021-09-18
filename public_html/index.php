@@ -1,6 +1,6 @@
 <?php
 
-include 'config/config.php';
+include '../config/config.php';
 if (empty($basedomain)) die ('config.php is needed');
 
 //
@@ -74,7 +74,7 @@ if (isset($_REQUEST['code'])) {
 // Create or update
 //
 if ($action == 1 && count($errormsg) == 0) {
-  $lines  = file('data/hosts');
+  $lines  = file('../data/hosts');
 
   $result = '';
   foreach($lines as $line) {
@@ -101,7 +101,7 @@ if ($action == 1 && count($errormsg) == 0) {
     if ($newsubdomain) {
       $result .= "$ip\t$domain\n";
     }
-    file_put_contents('data/hosts', $result);
+    file_put_contents('../data/hosts', $result);
     $updated = true;
   }
 }

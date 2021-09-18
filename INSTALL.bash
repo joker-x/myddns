@@ -54,12 +54,13 @@ function copy_www() {
   echo -e "${GREEN}Copy www${NOCOLOR}"
   mkdir -p /var/www/myddns/data
   touch /var/www/myddns/data/hosts
-  cp -R "$SCRIPTPATH"/* /var/www/myddns/
+  cp -R "$SCRIPTPATH/public_html" /var/www/myddns/
   chown -R www-data:www-data /var/www/myddns
 }
 
 function configure_app() {
   echo -e "${GREEN}Configure application${NOCOLOR}"
+  mkdir -p /var/www/myddns/config
   CONFIG=$(cat <<EOF
 <?php
   \$basedomain="$BASEDOMAIN";

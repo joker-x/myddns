@@ -1,8 +1,10 @@
-# MyDDNS
+# MyDDNS [BETA]
 
 Simple Dynamic DNS Web management self-hosting. It use [dnsmasq](https://en.wikipedia.org/wiki/Dnsmasq). It was inspired on [duckdns.org](http://www.duckdns.org).
 
-![image](https://user-images.githubusercontent.com/1895563/133020249-1c2d59c0-a32f-43fe-a1a5-666131d0d188.png)
+![image](https://user-images.githubusercontent.com/1895563/134248325-49aa67c4-2478-4d7d-9b44-f98629c5e9ff.png)
+
+![image](https://user-images.githubusercontent.com/1895563/134248636-d0e97490-8c75-4bc1-9d82-72f0afc8136e.png)
 
 
 ## Preparation
@@ -19,12 +21,14 @@ Also, you have to create these records in your Zone DNS of your domain provider:
 
 ### Installation with docker-composer
 
-1. Install docker and docker-composer
-2. Clone this repository
-3. Copy .env.example to .env and set the environment variables
-4. Execute:
+1. Install docker and docker-composer.
+2. Disable systemd-resolved or any other service that use 53 port.
+3. Clone this repository.
+4. Copy .env.example to .env and set the environment variables.
+5. Create an empty data/hosts file with write permission for www-data user.
+6. Execute:
 ```bash
-docker-compose up -d
+docker-compose up -d --build
 ``` 
 
 ### Local installation in Ubuntu 20.04 server

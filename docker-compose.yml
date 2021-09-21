@@ -1,0 +1,16 @@
+version: '3'
+services:
+  myddns:
+    restart: always
+    env_file: .env
+    build:
+      context: .
+      args:
+        - BASEDOMAIN=${BASEDOMAIN}
+        - BASEIP=${BASEIP}
+        - PASSWORD=${PASSWORD}
+    volumes:
+      - ./data:/var/www/myddns/data:rw
+    network_mode: host
+    cap_add:
+      - NET_ADMIN

@@ -1,0 +1,6 @@
+#!/bin/bash
+/usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
+
+#/usr/sbin/service dnsmasq start
+#/usr/sbin/service php7.4-fpm start
+#/usr/sbin/service nginx start

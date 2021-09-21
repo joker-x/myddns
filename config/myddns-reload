@@ -14,7 +14,12 @@ then
   echo "WARN: $HOSTFILE was not been changed."
 else
   md5sum ${HOSTFILE} > ${HOSTFILE}.md5sum
-  service dnsmasq reload
+  if [ -z $(which supervisord) ]
+  then
+    service dnsmasq reload
+  else
+    supervisorctl restart dnsmasq
+  fi
   echo "INFO: $HOSTFILE reload."
 fi
 

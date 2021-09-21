@@ -17,6 +17,16 @@ Also, you have to create these records in your Zone DNS of your domain provider:
 
 ## Installation
 
+### Installation with docker-composer
+
+1. Install docker and docker-composer
+2. Clone this repository
+3. Copy .env.example to .env and set the environment variables
+4. Execute:
+```bash
+docker-compose up -d
+``` 
+
 ### Local installation in Ubuntu 20.04 server
 
 1. Change to root user

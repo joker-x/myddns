@@ -25,8 +25,7 @@ Also, you have to create these records in your Zone DNS of your domain provider:
 2. Disable systemd-resolved or any other service that use 53 port.
 3. Clone this repository.
 4. Copy .env.example to .env and set the environment variables.
-5. Create an empty data/hosts file with write permission for www-data user.
-6. Execute:
+5. Execute:
 ```bash
 docker-compose up -d --build
 ``` 

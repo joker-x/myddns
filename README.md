@@ -9,13 +9,13 @@ Simple Dynamic DNS Web management self-hosting. It use [dnsmasq](https://en.wiki
 
 ## Preparation
 
-You need root access to a server, virtual machine or container with IPv6 enabled. The 53 port must be open in your firewall.
+You need root access to a server, virtual machine or container. The 53 port must be open in your firewall.
 
 Also, you have to create these records in your Zone DNS of your domain provider:
 
-- A record for subdomain (myddns.example.com) to point to IPv4 of your server
-- AAAA record for subdomain (myddns.example.com) to point to IPv6 of your server
-- NS record to point to subdomain (myddns.example.com)
+- (required) A record for subdomain (myddns.example.com) to point to IPv4 of your server
+- (optional) AAAA record for subdomain (myddns.example.com) to point to IPv6 of your server
+- (required) NS record to point to subdomain (myddns.example.com)
 
 ## Installation
 
